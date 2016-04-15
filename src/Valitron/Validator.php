@@ -37,6 +37,11 @@ class Validator
     /**
      * @var array
      */
+    protected $_defaults = array();
+
+    /**
+     * @var array
+     */
     protected $_labels = array();
 
     /**
@@ -899,6 +904,11 @@ class Validator
                 // adding fields to check data if there are fields that are not defined by rules
                 $fieldsDefined[] = $field;
 
+                // adding defaults if there are set and value is not
+                if (!$values && !$this->hasRule('required', $field) && isset($this->_defaults[$field])) {
+                    $values = $this->_defaults[$field];
+                }
+
                 // Don't validate if the field is not required and the value is empty
                 if ($this->hasRule('optional', $field) && isset($values)) {
                     //Continue with execution below if statement
@@ -1089,5 +1099,25 @@ class Validator
                 $this->rule($ruleType, $params);
             }
         }
+    }
+
+    /**
+     * set single value
+     *
+     * @param array $defaults
+     *
+     */
+    public function setDefault($key, $default) {
+        $this->_defaults[$key] = $default;
+    }
+
+    /**
+     * setting defaults
+     *
+     * @param array $defaults
+     *
+     */
+    public function defaults($defaults) {
+        $this->_defaults = $defaults;
     }
 }
