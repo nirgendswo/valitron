@@ -1,15 +1,20 @@
 {
-    "name": "vlucas/valitron",
+    "name": "nirgendswo/valitron",
     "type": "library",
     "description": "Simple, elegant, stand-alone validation library with NO dependencies",
     "keywords": ["validation", "validator", "valid"],
-    "homepage": "http://github.com/vlucas/valitron",
+    "homepage": "http://github.com/nirgendswo/valitron",
     "license" : "BSD",
     "authors" : [
         {
             "name": "Vance Lucas",
             "email": "vance@vancelucas.com",
             "homepage": "http://www.vancelucas.com"
+        },
+        {
+            "name": "Björn Hase",
+            "email": "me@nirgendswo.de",
+            "homepage": "http://www.nirgendswo.de"
         }
     ],
     "require": {

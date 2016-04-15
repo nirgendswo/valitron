@@ -1,4 +1,5 @@
 <?php
+
 namespace Valitron;
 
 use InvalidArgumentException;
@@ -463,7 +464,7 @@ class Validator
         foreach ($this->validUrlPrefixes as $prefix) {
             if (strpos($value, $prefix) !== false) {
                 $host = parse_url(strtolower($value), PHP_URL_HOST);
-                
+
                 return checkdnsrr($host, 'A') || checkdnsrr($host, 'AAAA') || checkdnsrr($host, 'CNAME');
             }
         }
@@ -738,6 +739,29 @@ class Validator
     }
 
     /**
+     * Validate a field that is an array is not contained within a list of values
+     *
+     * @param  string $field
+     * @param  mixed  $value
+     * @param  array  $params
+     * @internal param array $fields
+     * @return bool
+     */
+    protected function validateArrayIn($field, $value, $params)
+    {
+        $result = true;
+
+        foreach ($value as $v) {
+            $result = $this->validateIn($field, $v, $params);
+            if ($result === false) {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      *  Get array of fields and data
      *
      * @return array
@@ -900,6 +924,8 @@ class Validator
                     $this->error($field, $v['message'], $v['params']);
                 }
             }
+
+            var_dump($v['fields']); die();
         }
 
         return count($this->errors()) === 0;
