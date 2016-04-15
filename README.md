@@ -35,12 +35,11 @@ $validator->setDefaults($defaults);
 
 ```
 
-## arrayIn
+## Rule: arrayIn
 
 Performs in_array check on given array values for an array
 
 ```php
-
 $data = ['roles' => ['USER']];
 
 $validator = new Valitron\Validator($data);
