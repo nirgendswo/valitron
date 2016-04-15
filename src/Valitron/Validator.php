@@ -896,7 +896,7 @@ class Validator
             foreach ($v['fields'] as $field) {
                 list($values, $multiple) = $this->getPart($this->_fields, explode('.', $field));
 
-                // adding fields to check if fields are in data that are not defined by rules
+                // adding fields to check data if there are fields that are not defined by rules
                 $fieldsDefined[] = $field;
 
                 // Don't validate if the field is not required and the value is empty
@@ -928,14 +928,14 @@ class Validator
             }
         }
 
-        // check if fields that have validated are the them in data
+        // check data if there are fields that are not defined by rules
         $this->validateForm($fieldsDefined);
 
         return count($this->errors()) === 0;
     }
 
     /**
-     * check if fields are in data that are not defined by rules
+     * check data if there are fields that are not defined by rules
      * if not add error
      *
      * @param array $fieldsDefined
