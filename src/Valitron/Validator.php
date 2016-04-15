@@ -1,5 +1,4 @@
 <?php
-
 namespace Valitron;
 
 use InvalidArgumentException;
@@ -739,29 +738,6 @@ class Validator
     }
 
     /**
-     * Validate a field that is an array is not contained within a list of values
-     *
-     * @param  string $field
-     * @param  mixed  $value
-     * @param  array  $params
-     * @internal param array $fields
-     * @return bool
-     */
-    protected function validateArrayIn($field, $value, $params)
-    {
-        $result = true;
-
-        foreach ($value as $v) {
-            $result = $this->validateIn($field, $v, $params);
-            if ($result === false) {
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      *  Get array of fields and data
      *
      * @return array
@@ -893,9 +869,14 @@ class Validator
      */
     public function validate()
     {
+        $fieldsDefined = [];
+
         foreach ($this->_validations as $v) {
             foreach ($v['fields'] as $field) {
-                 list($values, $multiple) = $this->getPart($this->_fields, explode('.', $field));
+                list($values, $multiple) = $this->getPart($this->_fields, explode('.', $field));
+
+                // adding fields to check if fields are in data that are not defined by rules
+                $fieldsDefined[] = $field;
 
                 // Don't validate if the field is not required and the value is empty
                 if ($this->hasRule('optional', $field) && isset($values)) {
@@ -924,11 +905,28 @@ class Validator
                     $this->error($field, $v['message'], $v['params']);
                 }
             }
-
-            var_dump($v['fields']); die();
         }
 
+        // check if fields that have validated are the them in data
+        $this->validateForm($fieldsDefined);
+
         return count($this->errors()) === 0;
+    }
+
+    /**
+     * check if fields are in data that are not defined by rules
+     * if not add error
+     *
+     * @param array $fieldsDefined
+     *
+     */
+    protected function validateForm($fieldsDefined) {
+        foreach(array_keys($this->_fields) as $field) {
+            if (!in_array($field, $fieldsDefined)) {
+                $this->error('form', static::$_ruleMessages['form'], []);
+                break;
+            }
+        }
     }
 
     /**

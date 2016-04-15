@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Simple, elegant, stand-alone validation library with NO dependencies",
     "keywords": ["validation", "validator", "valid"],
-    "homepage": "http://github.com/nirgendswo/valitron",
+    "homepage": "http://github.com/vlucas/valitron",
     "license" : "BSD",
     "authors" : [
         {
