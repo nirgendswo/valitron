@@ -117,6 +117,7 @@ V::lang('ar');
  * `min` - Minimum
  * `max` - Maximum
  * `in` - Performs in_array check on given array values
+ * `arrayIn` - Performs in_array check on given array values for an array
  * `notIn` - Negation of `in` rule (not in array of values)
  * `ip` - Valid IP address
  * `email` - Valid email address
